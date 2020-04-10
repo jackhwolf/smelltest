@@ -1,3 +1,3 @@
 # smelltest
 
-code for smelltest.com
+backend code for smelltest.com
