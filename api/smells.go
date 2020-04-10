@@ -18,5 +18,5 @@ func getSmells(w http.ResponseWriter, req *http.Request) (int, error) {
 // BuildSmellsRouter builds the mux router for the api
 func BuildSmellsRouter(r *mux.Router) {
 	api := r.PathPrefix("/v1/smells").Subrouter().StrictSlash(true)
-	api.HandleFunc("/", MuxWrappable(getSmells).Wrapped(false)).Methods(http.MethodGet)
+	api.HandleFunc("/", MuxWrappable(getSmells).Wrapped(true)).Methods(http.MethodGet)
 }

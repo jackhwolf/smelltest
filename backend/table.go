@@ -84,9 +84,7 @@ func (table *DDBTable) AddItem(dst interface{}) {
 	name := table.Name
 	item, err := dynamodbattribute.MarshalMap(dst)
 	if err != nil {
-		fmt.Println("Got error marshalling new movie item:")
-		fmt.Println(err.Error())
-		// os.Exit(1)
+		panic(err)
 	}
 	input := &dynamodb.PutItemInput{
 		Item:      item,
@@ -95,9 +93,7 @@ func (table *DDBTable) AddItem(dst interface{}) {
 	ddb := dynamodb.New(getSess())
 	_, err = ddb.PutItem(input)
 	if err != nil {
-		fmt.Println("Got error calling PutItem:")
-		fmt.Println(err.Error())
-		// os.Exit(1)
+		panic(err)
 	}
 }
 
@@ -128,7 +124,7 @@ func (table *DDBTable) ReadItem(hk, rk string, dst interface{}) {
 	}
 	err = dynamodbattribute.UnmarshalMap(result.Item, &dst)
 	if err != nil {
-		panic(fmt.Sprintf("Failed to unmarshal Record, %v", err))
+		panic(err)
 	}
 }
 
@@ -138,7 +134,7 @@ func (table *DDBTable) Lookup(k, v string) []map[string]*dynamodb.AttributeValue
 	filt := expression.Name(k).Equal(expression.Value(v))
 	expr, err := expression.NewBuilder().WithFilter(filt).Build()
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 	input := &dynamodb.ScanInput{
 		ExpressionAttributeNames:  expr.Names(),
@@ -149,9 +145,7 @@ func (table *DDBTable) Lookup(k, v string) []map[string]*dynamodb.AttributeValue
 	// Make the DynamoDB Query API call
 	result, err := ddb.Scan(input)
 	if err != nil {
-		fmt.Println("LookupHK call failed:")
-		fmt.Println((err.Error()))
-		os.Exit(1)
+		panic(err)
 	}
 	return result.Items
 }
@@ -173,8 +167,7 @@ func (table *DDBTable) Delete(hk, rk string) error {
 
 	_, err := ddb.DeleteItem(input)
 	if err != nil {
-		fmt.Println("Got error calling DeleteItem")
-		fmt.Println(err.Error())
+		panic(err)
 	}
 	return err
 }
