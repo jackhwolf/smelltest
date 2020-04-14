@@ -22,8 +22,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("", notFound)
 
-	api.BuildUserRouter(r)
-	api.BuildSmellsRouter(r)
+	api.BuildUserRouter(r, "/api/v1/user")
+	api.BuildSmellsRouter(r, "/api/v1/smells")
 	// srv := &http.Server{
 	// 	Handler: r,
 	// 	Addr:    "127.0.0.1:8081",

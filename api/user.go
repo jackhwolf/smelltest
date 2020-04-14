@@ -124,8 +124,8 @@ func deleteUser(w http.ResponseWriter, req *http.Request) (int, error) {
 }
 
 // BuildUserRouter builds the mux router for the api
-func BuildUserRouter(r *mux.Router) {
-	api := r.PathPrefix("/v1/user").Subrouter()
+func BuildUserRouter(r *mux.Router, pref string) {
+	api := r.PathPrefix(pref).Subrouter()
 	api.HandleFunc("/", MuxWrappable(postNewUser).Wrapped(false)).Methods(http.MethodPost)
 	api.HandleFunc("/login/", MuxWrappable(loginUser).Wrapped(false)).Methods(http.MethodPost)
 	api.HandleFunc("/logout/", MuxWrappable(logoutUser).Wrapped(false)).Methods(http.MethodGet)
