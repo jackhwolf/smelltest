@@ -90,6 +90,7 @@ func AuthHandler(w http.ResponseWriter, req *http.Request) (*ReverseLookupRespon
 		w.Write([]byte(`{"message": "unauthorized"}`))
 		return lookup, false
 	}
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	return lookup, true
 }
 

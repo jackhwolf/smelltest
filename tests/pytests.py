@@ -9,7 +9,7 @@ def decode_go_resp(resp):
     print()
     return resp
 
-base_url = "http://localhost:8081/api/v1/{}/"
+base_url = "http://18.188.48.227/api/v1/{}/"
 user_url = base_url.format('user')
 smell_url = base_url.format('smells')
 
