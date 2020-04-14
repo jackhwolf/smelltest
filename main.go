@@ -6,7 +6,6 @@ import (
 	"smelltest/api"
 	"smelltest/backend"
 
-	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -32,5 +31,5 @@ func main() {
 	// 	ReadTimeout:  15 * time.Second,
 	// }
 	// log.Fatal(srv.ListenAndServe())
-	log.Fatal(http.ListenAndServe(":8081", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
+	log.Fatal(http.ListenAndServe(":8081"))
 }
