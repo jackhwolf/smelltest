@@ -75,7 +75,7 @@ func AuthenticateUnPw(username, password string) *AuthenticateUnPwResponse {
 	return &AuthenticateUnPwResponse{BlankUser(), false}
 }
 
-// AuthHandler is to authenticate every request
+// AuthHandler is to authenticate requests
 func AuthHandler(w http.ResponseWriter, req *http.Request) (*ReverseLookupResponse, bool) {
 	token := req.Header.Get("X-Access-Token")
 	w.Header().Set("Content-Type", "application/json")
@@ -90,7 +90,6 @@ func AuthHandler(w http.ResponseWriter, req *http.Request) (*ReverseLookupRespon
 		w.Write([]byte(`{"message": "unauthorized"}`))
 		return lookup, false
 	}
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	return lookup, true
 }
 
@@ -125,5 +124,6 @@ func (fn MuxWrappable) Wrapped(tokenCheck bool) func(http.ResponseWriter, *http.
 			log.Println(err)
 			http.Error(w, emap[status], status)
 		}
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 	}
 }
