@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"smelltest/api"
 	"smelltest/backend"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -23,13 +24,11 @@ func main() {
 
 	api.BuildUserRouter(r, "/api/v1/user")
 	api.BuildSmellsRouter(r, "/api/v1/smells")
-	// srv := &http.Server{
-	// 	Handler: r,
-	// 	Addr:    "127.0.0.1:8081",
-	// 	// Good practice: enforce timeouts for servers you create!
-	// 	WriteTimeout: 15 * time.Second,
-	// 	ReadTimeout:  15 * time.Second,
-	// }
-	// log.Fatal(srv.ListenAndServe())
-	log.Fatal(http.ListenAndServe(":8081"))
+	srv := &http.Server{
+		Handler:      r,
+		Addr:         "127.0.0.1:8081",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	log.Fatal(srv.ListenAndServe())
 }
