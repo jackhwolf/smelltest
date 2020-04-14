@@ -118,12 +118,12 @@ func (fn MuxWrappable) Wrapped(tokenCheck bool) func(http.ResponseWriter, *http.
 				return // AuthHandler takes care of this stuff
 			}
 		}
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		status, err := fn(w, req)
 		if err != nil {
 			emap := makeErrMap()
 			log.Println(err)
 			http.Error(w, emap[status], status)
 		}
-		w.Header().Set("Access-Control-Allow-Origin", "*")
 	}
 }
